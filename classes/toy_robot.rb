@@ -3,6 +3,8 @@ class ToyRobot
 
     FACES = ['NORTH','EAST','SOUTH', 'WEST'].freeze
 
+    attr_accessor :coordinates,:face
+
     def initialize(grid)
         @grid = grid
         @placed = false
@@ -23,7 +25,7 @@ class ToyRobot
     end
 
     def place(x,y,face)
-        if @grid.valid_position?(x,y)
+        if @grid.valid_position?(x,y) && FACES.include?(face)
             @coordinates.x = x
             @coordinates.y = y
             @face = face
@@ -38,7 +40,13 @@ class ToyRobot
     end
 
     def report
-        puts "#{@coordinates.x},#{@coordinates.y},#{@face}"
+        unless @face.nil? && @coordinates.x.nil? && @coordinates.y.nil? 
+            output = "#{@coordinates.x},#{@coordinates.y},#{@face}"
+        else
+            output = "Robot not placed on board"
+        end
+        puts output
+        output
     end
     
     private

@@ -5,9 +5,10 @@ require_relative './toy_robot.rb'
 class RobotProgram
     COMMANDS = ["PLACE", "MOVE", "REPORT", "LEFT", "RIGHT"].freeze
     FACES = ['NORTH','EAST','SOUTH', 'WEST'].freeze
+    GRID_SIZE = 5
     
     def initialize
-        @toy_robot = ToyRobot.new(Grid.new(5,5))
+        @toy_robot = ToyRobot.new(Grid.new(GRID_SIZE,GRID_SIZE))
     end
 
     def process_command
