@@ -1,5 +1,6 @@
 require "./classes/robot_program.rb"
 @program = RobotProgram.new
-while(1)
+puts "Enter Commands"
+while(1) do
     @program.process_command
 end

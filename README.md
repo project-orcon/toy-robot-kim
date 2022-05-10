@@ -1,5 +1,26 @@
 # Toy Robot
 
+#### Setup 
+
+Install gems 
+```
+bundle install
+```
+
+to run tests
+```
+bundle exec rspec
+```
+
+to run the program
+```
+ruby run_robot_program.rb
+```
+CTRL C to exit
+
+
+
+
 #### What is this ?
 
 Toy Robot is a ruby coding exercise that we get our potential candidates  complete for us (Mable) to understand their capabilities.  

@@ -1,54 +1,68 @@
+# frozen_string_literal: true
 
-require_relative './grid.rb'
-require_relative './toy_robot.rb'
+require_relative './grid'
+require_relative './toy_robot'
 
 class RobotProgram
-    COMMANDS = ["PLACE", "MOVE", "REPORT", "LEFT", "RIGHT"].freeze
-    FACES = ['NORTH','EAST','SOUTH', 'WEST'].freeze
-    GRID_SIZE = 5
-    
-    def initialize
-        @toy_robot = ToyRobot.new(Grid.new(GRID_SIZE,GRID_SIZE))
-    end
+  COMMANDS = %w[PLACE MOVE REPORT LEFT RIGHT].freeze
+  FACES = %w[NORTH EAST SOUTH WEST].freeze
+  GRID_SIZE = 5
+  attr_reader :errors
 
-    def process_command
-        command,arguments = get_input
-        return "Incorrect command or arguments" unless correct_input?(command,arguments)
-        if arguments.nil?
-            @toy_robot.send(command.downcase)
-        else
-            @toy_robot.send(command.downcase, *format_arguments(arguments))
-        end
-    end
+  def initialize
+    @toy_robot = ToyRobot.new(Grid.new(GRID_SIZE, GRID_SIZE))
+    @errors = false
+  end
 
-    private
+  def process_command
+    reset_errors
+    command, arguments = get_input
+    return unless correct_input?(command, arguments)
 
-    def get_input
-        puts "Enter Command"
-        command_line = gets.chomp
-        command =  command_line.split(" ")[0]
-        arguments =  command_line.split(" ")[1]&.split(",")
-        return command,arguments
-    end
+    execute_command(command, arguments)
+  end
 
-    def correct_input?(command,arguments)
-        if arguments.nil?
-            COMMANDS.include?(command)
-        else
-            COMMANDS.include?(command) && is_number?(arguments[0]) && is_number?(arguments[1]) && is_face?(arguments[2])
-        end
-    end
+  private
 
-    def format_arguments(arguments)
-        arguments.map{|a| is_number?(a) ? a.to_i : a}
-    end
+  def reset_errors
+    @errors = false
+  end
 
-    def is_number? string
-        true if Float(string) rescue false
-    end
+  def get_input
+    command_line = gets.chomp
+    command = command_line.split(' ')[0]
+    arguments = command_line.split(' ')[1]&.split(',')
+    [command, arguments]
+  end
 
-    def is_face? string
-        FACES.include?(string)
+  def correct_input?(command, arguments)
+    if command == 'PLACE' && arguments.count == 3 && is_number?(arguments[0]) && is_number?(arguments[1]) && is_face?(arguments[2])
+      true
+    elsif COMMANDS.include?(command) && arguments.nil?
+      true
+    else
+      @errors = true
+      false
     end
-      
+  end
+
+  def execute_command(command, arguments)
+    @toy_robot.send(command.downcase, *format_arguments(arguments))
+  end
+
+  def format_arguments(arguments)
+    return unless arguments.is_a?(Array)
+
+    arguments.map { |a| is_number?(a) ? a.to_i : a }
+  end
+
+  def is_number?(string)
+    true if Integer(string)
+  rescue StandardError
+    false
+  end
+
+  def is_face?(string)
+    FACES.include?(string)
+  end
 end
