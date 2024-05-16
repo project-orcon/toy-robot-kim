@@ -14,7 +14,7 @@ bundle exec rspec
 
 to run the program
 ```
-ruby run_robot_program.rb
+ruby robot_program.rb
 ```
 CTRL C to exit
 

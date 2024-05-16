@@ -1,20 +1,17 @@
 # frozen_string_literal: true
 
-require_relative './grid'
-require_relative './toy_robot'
-
-class RobotProgram
+class CommandProcessor
   COMMANDS = %w[PLACE MOVE REPORT LEFT RIGHT].freeze
   FACES = %w[NORTH EAST SOUTH WEST].freeze
   GRID_SIZE = 5
   attr_reader :errors
 
-  def initialize
-    @toy_robot = ToyRobot.new(Grid.new(GRID_SIZE, GRID_SIZE))
+  def initialize(toy_robot)
+    @toy_robot = toy_robot
     @errors = false
   end
 
-  def process_command
+  def process
     reset_errors
     command, arguments = get_input
     return unless correct_input?(command, arguments)
