@@ -1,4 +1,5 @@
 # Toy Robot
+Updated May 2024
 
 #### Setup 
 
@@ -14,7 +15,7 @@ bundle exec rspec
 
 to run the program
 ```
-ruby robot_program.rb
+ruby toy_robot_simulator.rb
 ```
 CTRL C to exit
 

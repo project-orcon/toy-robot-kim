@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Represents a grid on which the toy robot can move.
 class Grid
   def initialize(width, height)
     @x_positions = 0..width - 1

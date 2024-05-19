@@ -15,7 +15,7 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-Dir['./lib/*.rb'].sort.each { |file| require file }
+Dir['./lib/**/*.rb'].sort.each { |file| require file }
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
